@@ -30,8 +30,8 @@ const db = mongoose.connection
     .once("open", () => console.log("Connected to MongoCloud instance."))
     .on("error", error => console.log("Error connecting to MongoCloud:", error));
 
-// place an encrypted identifier on the user's cookie.
-// hen a user makes a request, examine the cookie and modify the request object
+// place an encrypted identifier on the user's cookie
+// when a user makes a request, examine the cookie and modify the request object
 // to indicate which user made the request
 // cookie only contains the id of a session
 app.use(session({
