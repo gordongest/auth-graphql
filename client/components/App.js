@@ -5,7 +5,6 @@ const App = ({ children }) => {
     return (
         <div>
             <Header />
-            Auth Starter
             {children}
         </div>
     )

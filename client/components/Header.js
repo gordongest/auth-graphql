@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import  { Link } from 'react-router';
+import React from 'react';
+import  { Link, hashHistory } from 'react-router';
 import { graphql, compose } from 'react-apollo';
 import fetchCurrentUser from '../queries/fetchCurrentUser';
 import logout from '../queries/logout';
@@ -8,7 +8,9 @@ const Header = ({ mutate, data: { currentUser, loading } }) => {
     const handleLogout = e => {
         e.preventDefault();
 
-        mutate();
+        mutate({
+            refetchQueries: [{ query: fetchCurrentUser }]
+        });
     }
 
     const renderButtons = () => {
@@ -16,8 +18,8 @@ const Header = ({ mutate, data: { currentUser, loading } }) => {
 
         return currentUser ? (
             <div>
-                <li onClick={handleLogout} style={{ cursor: "pointer" }}>
-                    Log Out
+                <li onClick={handleLogout}>
+                    <a>Log Out</a>
                 </li>
             </div>
         ) : (
