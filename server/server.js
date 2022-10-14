@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const models = require('./models');
 const expressGraphQL = require('express-graphql');
@@ -12,17 +13,27 @@ const schema = require('./schema/schema');
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI = '';
+const MONGO_URI = `mongodb+srv://${process.env.MONGO_ATLAS_USERNAME}:${process.env.MONGO_ATLAS_PASSWORD}@cluster0.iar4och.mongodb.net/?retryWrites=true&w=majority`;
+if (!MONGO_URI) {
+  throw new Error('You must provide a MongoLab URI');
+}
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
 
 // Connect to the mongoDB instance and log a message
 // on success or failure
-mongoose.connect(MONGO_URI);
-mongoose.connection
-    .once('open', () => console.log('Connected to MongoLab instance.'))
-    .on('error', error => console.log('Error connecting to MongoLab:', error));
+void mongoose.connect(MONGO_URI, {
+  authSource: "admin",
+  retryWrites: true,
+  dbName: "graphql",
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
+
+const db = mongoose.connection
+    .once("open", () => console.log("Connected to MongoCloud instance."))
+    .on("error", error => console.log("Error connecting to MongoCloud:", error));
 
 // Configures express to use sessions.  This places an encrypted identifier
 // on the users cookie.  When a user makes a request, this middleware examines
@@ -34,7 +45,7 @@ app.use(session({
   saveUninitialized: true,
   secret: 'aaabbbccc',
   store: new MongoStore({
-    url: MONGO_URI,
+    mongooseConnection: db,
     autoReconnect: true
   })
 }));
