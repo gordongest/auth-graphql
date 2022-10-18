@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { handleFormSubmit } from '../handleFormSubmit';
+import { hashHistory } from 'react-router';
 
 class AuthForm extends Component {
     constructor(props) {
@@ -14,6 +15,12 @@ class AuthForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleErrorResponse = this.handleErrorResponse.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    componentWillUpdate(nextProps) {
+        if (!this.props.user && nextProps.user) {
+            hashHistory.push('/dashboard');
+        }
     }
 
     handleChange(e, field) {
@@ -55,7 +62,7 @@ class AuthForm extends Component {
                     {errors.map(err => (
                         <div
                             key={err}
-                            style={{ color: "red" }}
+                            style={{ color: "red", fontWeight: "bold" }}
                         >
                             {err}
                         </div>
@@ -105,7 +112,7 @@ class AuthForm extends Component {
 //                 {errors.map(err => (
 //                     <div
 //                         key={err}
-//                         style={{ color: "red" }}
+//                         style={{ color: "red", fontWeight: "bold" }}
 //                     >
 //                         {err}
 //                     </div>

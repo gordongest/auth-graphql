@@ -4,7 +4,7 @@ import { graphql, compose } from 'react-apollo';
 import fetchCurrentUser from '../queries/fetchCurrentUser';
 import logout from '../queries/logout';
 
-const Header = ({ mutate, data: { currentUser, loading } }) => {
+const Header = ({ mutate, data: { user, loading } }) => {
     const handleLogout = e => {
         e.preventDefault();
 
@@ -16,7 +16,7 @@ const Header = ({ mutate, data: { currentUser, loading } }) => {
     const renderButtons = () => {
         if (loading) return <div />;
 
-        return currentUser ? (
+        return user ? (
             <div>
                 <li onClick={handleLogout}>
                     <a>Log Out</a>
@@ -44,9 +44,6 @@ const Header = ({ mutate, data: { currentUser, loading } }) => {
                     {renderButtons()}
                 </ul>
             </div>
-            {currentUser &&
-            <p>{currentUser.email}</p>
-            }
         </nav>
     )
 }

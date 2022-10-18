@@ -1,12 +1,16 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import AuthForm from './AuthForm';
+import fetchCurrentUser from '../queries/fetchCurrentUser';
 import signupMutation from '../queries/signup';
 
-const SignUp = ({ mutate }) =>
+const SignUp = ({ mutate, data: { user } }) =>
     <div>
         <h3>Sign up</h3>
-        <AuthForm mutate={mutate} />
+        <AuthForm mutate={mutate} user={user} />
     </div>
 
-export default graphql(signupMutation)(SignUp);
+export default compose(
+    graphql(fetchCurrentUser),
+    graphql(signupMutation)
+)(SignUp);

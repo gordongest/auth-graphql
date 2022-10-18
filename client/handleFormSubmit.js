@@ -9,7 +9,6 @@ export const handleFormSubmit = ({ email, password }, mutate, errorHandler) => {
         },
         refetchQueries: [{ query: fetchCurrentUser }]
     })
-        .then(() => hashHistory.push('/'))
         .catch(res => {
             errorHandler(res.graphQLErrors.map(err => err.message));
         });

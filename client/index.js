@@ -6,6 +6,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import App from './components/App';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
+import Dashboard from './components/Dashboard';
 
 const client = new ApolloClient({
     dataIdFromObject: o => o.id
@@ -18,6 +19,7 @@ const Root = () => {
             <Route path="/" component={App}>
                 <Route exact path="signup" component={SignUp} />
                 <Route exact path="login" component={LogIn} />
+                <Route exact path="dashboard" component={Dashboard} />
             </Route>
         </Router>
       </ApolloProvider>
