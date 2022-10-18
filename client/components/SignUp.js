@@ -1,39 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { graphql } from 'react-apollo';
+import AuthForm from './AuthForm';
+import signupMutation from '../queries/signup';
 
-class SignUp extends Component {
-    constructor(props) {
-        super(props);
+const SignUp = ({ mutate }) =>
+    <div>
+        <h3>Sign up</h3>
+        <AuthForm mutate={mutate} />
+    </div>
 
-        this.state = {
-            email: '',
-            password: ''
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(e, field) {
-        this.setState({ [field]: e.target.value });
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log(this.state);
-    }
-
-    render() {
-        return (
-            <div>
-                <form>
-                    <input type="text" onChange={e => this.handleChange(e, "email")}/>
-                    <input type="password" onChange={e => this.handleChange(e, "password")}/>
-                    <button type="submit" onClick={this.handleSubmit}>submit</button>
-                </form>
-            </div>
-        )
-    }
-
-}
-
-export default SignUp;
+export default graphql(signupMutation)(SignUp);
