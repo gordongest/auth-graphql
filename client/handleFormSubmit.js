@@ -1,5 +1,4 @@
 import fetchCurrentUser from './queries/fetchCurrentUser';
-import { hashHistory } from 'react-router';
 
 export const handleFormSubmit = ({ email, password }, mutate, errorHandler) => {
     mutate({

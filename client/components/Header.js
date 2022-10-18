@@ -1,5 +1,5 @@
 import React from 'react';
-import  { Link, hashHistory } from 'react-router';
+import { Link } from 'react-router';
 import { graphql, compose } from 'react-apollo';
 import fetchCurrentUser from '../queries/fetchCurrentUser';
 import logout from '../queries/logout';
